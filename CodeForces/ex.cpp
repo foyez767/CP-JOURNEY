@@ -1,28 +1,17 @@
-#include<bits/stdc++.h>
-#define ll long long
-using namespace std;
 
-int main(){
-ios::sync_with_stdio(0);
-cin.tie(0);
-  
-    string s;
-    cin>>s;
-    string s_plus,s_num;
-    ll plus=0,num=0,j=0;
-    std::sort(s.begin(),s.end());
-    for(int i=0;i<s.length();i++){
-        if(s[i]=='+')
-            j++;
-    }
-    ll cnt=0,k=j,r=j;
-    for(int i=0;i<(s.length()-r);i++){
-        cout<<s[j];
-        j++;
-        if(cnt<k){
-            cout<<"+";
-            cnt++;
-        }
-    }
-    return 0;
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+	int arr[4],i;
+	for(i=0 ; i<4 ; i++) cin >> arr[i];
+	sort(arr,arr+4);
+	int count=0;
+	for(i=0 ; i<4 ; i++){
+		if(arr[i]==arr[i+1]){
+			count++;
+		}
+	}
+	cout << count<< endl;
+	return 0;
 }
