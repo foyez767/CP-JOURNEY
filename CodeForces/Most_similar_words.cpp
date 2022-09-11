@@ -1,39 +1,38 @@
+//Sep/05/2022 23:06UTC-6
 #include<bits/stdc++.h>
+#define ll long long
+#define nn "\n"
 using namespace std;
 
 int main(){
 ios::sync_with_stdio(0);
 cin.tie(0);
-  
-    vector<string>vec;
-    vector<int> summ;
-    int n=0,m=0;
-    string ex,A,B;
+ll t=0;
+cin>>t;
+while(t--){
+    ll n=0,m=0,move=0,min=0,diff=0;
     cin>>n>>m;
-    for(int i=0;i<m;i++){
-        cin>>ex;
-        vec.push_back(ex);
-    }
-    int x=0,a=0,b=0,c=0,d=0,sum=0;
-    for(int i=0;i<(n-1);i++){
-        x=0;
-        A=vec[i];
-        for(int j=i+1;i<=n;j++){
-            B=vec[j];
-            for(int k=0;k<m;k++){
-                if(A[k]<B[k])
-                    sum+=B[k]-A[k];
-                else if(A[k]>B[k])
-                    sum+=A[k]-B[k];
-                else if(A[k]==B[k])
-                    sum+=0;                
-            }
-            summ.push_back(sum);
-            sum=0;                
-        }
-    }
+    string st,p,q;
+    vector<string>s;
+    vector<ll>mini;
     for(int i=0;i<n;i++){
-        cout<<summ[i]<<endl;
+        cin>>st;
+        s.push_back(st);
     }
+    sort(s.begin(),s.end());
+    for(int i=0;i<n;i++){
+        for(int k=i+1;k<n;k++){
+            p=s[i];
+            q=s[k];
+            for(int j=0;j<m;j++){
+            move+=abs(q[j]-p[j]);
+        }
+        mini.push_back(move);
+        move=0;diff=0;
+    }
+}      
+    min=*(min_element(mini.begin(),mini.end()));
+    cout<<min<<nn;
+}    
     return 0;
 }

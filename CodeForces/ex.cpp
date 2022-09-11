@@ -1,24 +1,51 @@
 #include<bits/stdc++.h>
-#define ll long long
-#define nn  "\n"
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
 using namespace std;
-
+typedef tree<int, null_type, less<int>, rb_tree_tag,tree_order_statistics_node_update> OS;
+typedef tree<int, null_type, less_equal<int>, rb_tree_tag,tree_order_statistics_node_update> OMS;
+ 
+#define ll long long int
+ 
 int main(){
-ios::sync_with_stdio(0);
-cin.tie(0);
-    array<int,5>arr {};
-    for(int i=0;i<5;i++){
-        cin>>arr[i];
-        cout<<arr[i]<<" ";
+    int t;                  cin>>t;
+    while(t--){
+        ll n;               cin>>n;
+        ll k,b,s;           cin>>k>>b>>s;
+ 
+        if((k*b)<=s){
+            ll LastValue = min(s,(k*b)+k-1);
+            if(s-LastValue>((k-1)*(n-1))){
+                cout<<-1<<endl;
+                continue;
+            }
+            vector<ll> ans(n);
+            ans[n-1]=LastValue;
+            s-=LastValue;
+            for(int i=n-2;i>=0;i--){
+                if(s==0){
+                    ans[i]=0;
+                }
+                else if(s<=k-1){
+                    ans[i]=s;
+                    s=0;
+                }
+                else if(s>k-1){
+                    ans[i]=k-1;
+                    s-=(k-1);
+                }
+            }
+            for(int i=0;i<n;i++){
+                cout<<ans[i]<<" ";
+            }
+            cout<<endl;
+        }
+        else{
+            cout<<-1<<endl;
+            continue;
+        }
     }
-    cout<<endl;
-    sort(arr.begin(),arr.end());
-    for(auto a:arr)
-        cout<<a<<" ";
-    auto max=max_element(arr.begin(),arr.end());
-    auto min=min_element(arr.begin(),arr.end());
-    int sum=accumulate(arr.begin(),arr.end(),0);
-    cout<<endl;
-    cout<<*min<<" "<<*max<<" "<<sum<<nn;
     return 0;
 }
+ 
