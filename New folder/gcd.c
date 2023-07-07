@@ -5,7 +5,7 @@ int gcd(int a,int b){
         if(a>b)
             return gcd(a-b,b);
         else
-            return gcd(a,b-a);
+            return gcd(b-a,a);
 
     }else 
         return a;

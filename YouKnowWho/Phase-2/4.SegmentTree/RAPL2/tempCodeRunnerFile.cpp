@@ -1,0 +1,1 @@
+  ans = min(ans, (n / m) * b + (n % m) * a);

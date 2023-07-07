@@ -1,28 +1,34 @@
-//**********In the name of Allah, most Gracious and Merciful******
 #include<bits/stdc++.h>
 #define ll long long
-#define nn "\n"
 using namespace std;
 
-  
 void solve(){
-    string s;
-    cin>>s;
-    for(ll i=0;i<s.length();i++){
-        s.erase(i,1);
-        i--;
+    ll n,cnt = 0;   cin >> n;
+    vector<ll>vec(n,0),two(n+1,0);
+    for(auto &x : vec)  cin >> x;
+
+    for(ll i = 0;  i < n; i++){
+        if(vec[i] == 2){
+            cnt++;
+            two[cnt] = i+1;
+        }
     }
-    cout<<s<<endl;
+    if(cnt == 0) cout << 1 << "\n";
+    else if(cnt % 2) cout << -1 << "\n";
+    else
+        cout << two[cnt/2] << "\n";
+    
  
- }
-int main(){
-ios::sync_with_stdio(0);
-cin.tie(0);
-ll t=1;
-// cin>>t;
-while(t--){
-solve();
 }
+ 
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    ll t = 1;
+    cin >> t;
+    for(ll i = 1; i <= t; i++){
+        solve();
+    }
     
     return 0;
 }

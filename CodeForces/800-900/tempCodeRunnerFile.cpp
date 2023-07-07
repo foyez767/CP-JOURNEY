@@ -1,7 +1,2 @@
-for(i=vec.size()-1 ;i>=0;i--){
-    //     x=count(vec.begin()+i,vec.end(),vec[i]);
-    //     if(x>1){
-    //         cout<<i<<nn;
-    //         break;
-    //     }
-    // }
+if(n==1 and a[0] < b[0]) flag=1;
+    // else flag=0;

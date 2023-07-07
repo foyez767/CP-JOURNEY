@@ -1,0 +1,1 @@
+maxA = arr[n], maxB = brr[n];

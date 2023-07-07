@@ -1,0 +1,153 @@
+#include<bits/stdc++.h>
+#define ll long long
+using namespace std;
+
+const int N = 1e6 + 7;
+const int P1 = 137, P2 = 277, mod1 = 1e9 + 7, mod2 = 1e9 + 9;
+ 
+int power(long long n,long long k, int mod){
+    int ans = 1 % mod; n %= mod; if(n < 0) n += mod;
+ 
+    while(k){
+        if(k & 1) ans = (long long) ans * n % mod;
+        n = (long long) n * n % mod;
+        k >>= 1;
+    }
+return ans;
+}
+ 
+int invp1, invp2;
+pair<int,int> pw[N], invpw[N];
+ 
+void precal(){
+    pw[0] = {1, 1};
+ 
+    for(int i = 1; i < N; i++){
+        pw[i].first  = 1LL * pw[i - 1].first * P1 % mod1;
+        pw[i].second = 1LL * pw[i - 1].second * P2 % mod2;
+    }
+ 
+    invp1 = power(P1, mod1 - 2, mod1);
+    invp2 = power(P2, mod2 - 2, mod2);
+ 
+    invpw[0] = {1, 1};
+ 
+    for(int i = 1; i < N; i++){
+        invpw[i].first = 1LL * invpw[i - 1].first * invp1 % mod1;
+        invpw[i].second = 1LL * invpw[i - 1].second * invp2 % mod2;
+    }
+}
+//hash of a string
+pair<int,int> stringHash(string s){
+    int n = s.size();
+ 
+    pair<int,int> hs = {0, 0};
+ 
+    for(int i = 0; i < n; i++){
+        hs.first += 1LL * s[i] * pw[i].first % mod1;
+        hs.second += 1LL * s[i] * pw[i].second % mod2;
+        hs.first %= mod1;
+        hs.second %= mod2;
+    }
+return hs;
+}
+ 
+pair<int,int> pref[N];
+ 
+void build(string s){
+    int n = s.size();
+ 
+    for(int i = 0; i < n; i++){
+        pref[i].first = 1LL * s[i] * pw[i].first % mod1;
+        if(i) pref[i].first = (pref[i].first + pref[i - 1].first) % mod1;
+        pref[i].second = 1LL * s[i] * pw[i].second % mod2;
+        if(i) pref[i].second = (pref[i].second + pref[i - 1].second) % mod2;
+    }
+}
+ 
+//substring hash
+pair<int,int> getHash(int i, int j){
+    assert(i <= j);
+    pair<int,int> hs = {0, 0};
+ 
+    hs.first = pref[j].first;
+    if(i) hs.first = (hs.first - pref[i - 1].first + mod1) % mod1;
+    hs.first = 1LL * hs.first * invpw[i].first % mod1;
+ 
+    hs.second = pref[j].second;
+    if(i) hs.second = (hs.second - pref[i -1].second + mod2) % mod2;
+    hs.second = 1LL * hs.second * invpw[i].second % mod2;
+return hs;
+}
+
+int  n;
+
+int max_ocs(int len){
+    map<pair<int,int>, int> mp;
+
+    int ans = 0;
+    for(int i = 0; i + len - 1 < n; i++){
+        pair<int,int> p = getHash(i, i + len - 1);
+        mp[p]++;
+        if(mp[p] == 3){
+            ans = 3;
+            break;
+        }
+    }
+    
+return ans;
+}
+
+void solve(){
+    string s; cin >> s;
+
+    precal();
+    build(s);
+
+    n = s.length();
+ 
+    vector<int> ans;
+
+    for(int len = 1; len < n; len++){
+        if(getHash(0, len - 1) == getHash(n - len,n - 1)){
+            ans.push_back(len);
+        }
+    }
+
+    int kk = ans.size() - 1;
+
+    int lo = 0, hi = kk, mxL = -1;
+
+    while(lo <= hi){
+        int mid = (lo + hi) >> 1;
+
+        if(max_ocs(ans[mid]) >= 3) {
+            // int x = ans[mid];
+            mxL = max(mxL, ans[mid]);
+            lo = mid + 1;
+        }
+        else {
+            hi = mid - 1;
+        }
+    }
+
+    if(mxL == -1) {
+        cout << "Just a legend\n";
+    }
+    else {
+        cout << s.substr(0, mxL) << "\n";
+    }
+
+}
+ 
+int32_t main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1;
+    // cin >> t;
+    for(int i = 1; i <= t; i++){
+        solve();
+    }
+    
+    return 0;
+}

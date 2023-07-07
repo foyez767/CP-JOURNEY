@@ -1,0 +1,6 @@
+for(ll i=0; i<n; i++){
+        for(ll j=0; j<n; j++){
+            cout<< vec[i][j]<<" ";
+        }
+        cout<<nn;
+    }
