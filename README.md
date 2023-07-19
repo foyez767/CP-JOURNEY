@@ -1,2 +1,2 @@
 # CP-JOURNEY
-Here I will be uploaded  problem's solution which I solved from different Judges/contest.
+Here I am uploading the problem solution that I solved from different judges like codeforces, atcoder, spoj, lightoj et.
